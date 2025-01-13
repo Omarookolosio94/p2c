@@ -10,6 +10,12 @@ This repository contains the frontend and backend code for the **P2C** (Peer to 
 
 ---
 
+## Demo
+
+Watch the [demo video](https://drive.google.com/file/d/1cPmp0NE_6ot7kGCDObzEr8DYARX9PPdk/view?usp=sharing) to see the project in action:
+
+---
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
