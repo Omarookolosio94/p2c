@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../../../core/components/html/Input";
 import Button from "../../../core/components/html/Button";
 import { NewUser, newUserSchema } from "../../../core/types/user";
+import { useBoundStore } from "../../../core/stores/useBoundStore";
+import { useEffect } from "react";
 
 export default function Signup() {
   const {
     register,
+    setError,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm<NewUser>({
@@ -18,14 +21,39 @@ export default function Signup() {
     mode: "onChange",
   });
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { register: registerUser, currentUser } = useBoundStore();
 
-  const onLogin = async (newUser: NewUser) => {
-    console.log(newUser);
+  const onRegister = async (newUser: NewUser) => {
+    const res = await registerUser(newUser);
+
+    if (res?.status) {
+      navigate("/chats");
+    } else {
+      const errors: { [key: string]: string } =
+        (res?.data as { [key: string]: string }) || {};
+
+      if (errors) {
+        Object.keys(errors).forEach((field) => {
+          if (errors[field]) {
+            setError(field as keyof NewUser, {
+              type: "manual",
+              message: errors[field],
+            });
+          }
+        });
+      }
+    }
   };
 
+  useEffect(() => {
+    if (currentUser != null) {
+      navigate("/chats");
+    }
+  }, []);
+
   return (
-    <form onSubmit={handleSubmit(onLogin)}>
+    <form onSubmit={handleSubmit(onRegister)}>
       <Input
         suppressHydrationWarning
         placeholder="Name"

@@ -1,25 +1,25 @@
 import { StateCreator } from "zustand";
 import { defaultUserState, UserSlice } from "./userSlice";
-import { ChatSlice, defaultChatState } from "./chatSlice";
+import { ChatRoomSlice, defaultChatRoomState } from "./chatRoomSlice";
 
 type State = {
-  isNavOpen: boolean;
+  isProfileOpen: boolean;
 };
 
 type Actions = {
   reset: () => void;
-  toggleNav: () => void;
+  toggleProfile: () => void;
   isLoading: () => boolean;
 };
 
 const defaultSharedState = {
-  isNavOpen: false,
+  isProfileOpen: false,
 };
 
 export type SharedSlice = Actions & State;
 
 export const createSharedSlice: StateCreator<
-  UserSlice & ChatSlice & State,
+  UserSlice & ChatRoomSlice & State,
   [],
   [],
   SharedSlice
@@ -28,11 +28,17 @@ export const createSharedSlice: StateCreator<
   isLoading: () => {
     return get().chatLoading || get().userLoading;
   },
-  toggleNav: () => {
-    set((state) => ({ isNavOpen: !state.isNavOpen }));
+  toggleProfile: () => {
+    set((state) => ({
+      isProfileOpen: get().singleUser == null ? false : !state.isProfileOpen,
+    }));
   },
   reset() {
-    set({ ...defaultSharedState, ...defaultChatState, ...defaultUserState });
+    set({
+      ...defaultSharedState,
+      ...defaultChatRoomState,
+      ...defaultUserState,
+    });
     sessionStorage.removeItem("p2c.store");
   },
 });

@@ -33,7 +33,7 @@ function App() {
             </Route>
 
             <Route path="chats" element={<Chat />}>
-              <Route path=":chatId" element={<Inbox />} />
+              <Route path=":chatId/:userId" element={<Inbox />} />
             </Route>
 
             <Route path="/chats/*" element={<Navigate to="/chats" replace />} />

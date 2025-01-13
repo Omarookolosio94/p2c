@@ -6,40 +6,10 @@ declare global {
   interface ApiResponse {
     status: boolean;
     data: unknown;
+    statusCode: number;
     message?: string;
   }
 
-  interface RoutesType {
-    name: string;
-    layout: string;
-    component: React.ReactNode;
-    icon: React.ReactNode;
-    path: string;
-  }
-
-  interface RouteChild {
-    name: string;
-    path: string;
-    icon: React.ReactNode;
-    display: boolean;
-    component: React.ReactNode;
-  }
-
-  interface Path {
-    name: string;
-    path: string;
-    isEnabled: boolean;
-  }
-
-  interface Pagination<T> {
-    items: T[];
-    pageSize?: number;
-    pageNumber?: number;
-    totalCount?: number;
-    totalPage?: number;
-  }
-
-  // new content
   interface User {
     userId: string;
     name: string;
@@ -58,12 +28,15 @@ declare global {
     isRead: boolean;
     isEncrypted: boolean;
     encryptionKey?: string;
+    chatId: string;
   }
 
-  interface Chat {
+  interface ChatRoom {
     chatId: string;
     user1Id: string;
+    user1Name: string;
     user2Id: string;
+    user2Name: string;
     messages: Message[];
     lastMessageTimestamp: string;
     isActive: boolean;

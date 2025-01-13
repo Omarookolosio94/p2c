@@ -1,16 +1,8 @@
 import { Outlet } from "react-router-dom";
-import { useBoundStore } from "../../core/stores/useBoundStore";
-import { useEffect } from "react";
 import logo from "../../assets/logo.svg";
 import dots from "../../assets/dots.svg";
 
 export default function Auth() {
-  const reset = useBoundStore((store) => store.reset);
-
-  useEffect(() => {
-    reset();
-  }, []);
-
   return (
     <>
       <div className="relative h-[100vh] w-full overflow-hidden bg-brand-blue">

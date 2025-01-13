@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, TextareaHTMLAttributes } from "react";
+import React, {
+  useState,
+  forwardRef,
+  TextareaHTMLAttributes,
+  useEffect,
+} from "react";
 import { cx } from "../../utilities/helpers";
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -7,6 +12,7 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   instruction?: string;
   boxClassName?: string;
   textareaClassName?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   autoResize?: boolean; // For enabling auto-resizing feature
 }
 
@@ -26,6 +32,10 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(function TextArea(
   ref,
 ) {
   const [currentValue, setCurrentValue] = useState(value || "");
+
+  useEffect(() => {
+    setCurrentValue(value || "");
+  }, [value]);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCurrentValue(event.target.value);
@@ -67,7 +77,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(function TextArea(
           {instruction}
         </p>
       )}
-      
     </fieldset>
   );
 });

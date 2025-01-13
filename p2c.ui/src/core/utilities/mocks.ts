@@ -56,6 +56,7 @@ const generateFakeMessages = (
 
     messages.push({
       messageId: faker.string.uuid(),
+      chatId: faker.string.uuid(),
       senderUserId: sender,
       receiverUserId: receiver,
       content: faker.lorem.sentence(),
@@ -72,7 +73,7 @@ export const generateFakeChat = (
   user1Id?: string,
   user2Id?: string,
   count?: number,
-): Chat => {
+): ChatRoom => {
   // Generate random user IDs if not provided
   const user1 = user1Id || faker.string.uuid();
   const user2 = user2Id || faker.string.uuid();
@@ -83,6 +84,8 @@ export const generateFakeChat = (
   return {
     chatId: faker.string.uuid(),
     user1Id: user1,
+    user1Name: "",
+    user2Name: "",
     user2Id: user2,
     messages,
     lastMessageTimestamp: messages[messages.length - 1].timestamp,

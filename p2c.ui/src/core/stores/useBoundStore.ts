@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { createUserSlice, UserSlice } from "./userSlice";
-import { ChatSlice, createChatSlice } from "./chatSlice";
 import { createSharedSlice, SharedSlice } from "./sharedSlice";
+import { ChatRoomSlice, createChatRoomSlice } from "./chatRoomSlice";
 
-export const useBoundStore = create<UserSlice & ChatSlice & SharedSlice>()(
+export const useBoundStore = create<UserSlice & ChatRoomSlice & SharedSlice>()(
   devtools(
     persist(
       (...a) => ({
         ...createUserSlice(...a),
-        ...createChatSlice(...a),
+        ...createChatRoomSlice(...a),
         ...createSharedSlice(...a),
       }),
       {

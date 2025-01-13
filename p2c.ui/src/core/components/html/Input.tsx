@@ -11,6 +11,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   dataList?: DataListItem[];
   label?: string;
   isNumberOnly?: boolean;
+  showError?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(function Input(
@@ -23,6 +24,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
     dataList = [],
     error = "",
     isNumberOnly = false,
+    showError = true,
     children = <></>,
     ...rest
   },
@@ -77,13 +79,15 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
         </>
       )}
 
-      <div className="mt-1 flex h-3 items-center">
-        {error && (
-          <>
-            <span className="text-xs leading-none text-red-500">{error}</span>
-          </>
-        )}
-      </div>
+      {showError && (
+        <div className="mt-1 flex h-3 items-center">
+          {error && (
+            <>
+              <span className="text-xs leading-none text-red-500">{error}</span>
+            </>
+          )}
+        </div>
+      )}
     </fieldset>
   );
 });

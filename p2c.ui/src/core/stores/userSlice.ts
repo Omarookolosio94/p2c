@@ -1,90 +1,86 @@
 import { StateCreator } from "zustand";
 import toast from "react-hot-toast";
 import { AuthData, NewUser } from "../types/user";
-import { fakeUser, generateFakeUsers } from "../utilities/mocks";
+import {
+  getAllUsers,
+  getUsersById,
+  loginUser,
+  registerNewUser,
+} from "../api/user.api";
+import { ChatRoomSlice } from "./chatRoomSlice";
 
 type State = {
-  user: User | null;
-  contacts: User[];
-  contactProfile: User | null;
+  currentUser: User | null;
+  users: User[];
+  singleUser: User | null;
   userLoading: boolean;
 };
 
 type Actions = {
   resetUser: () => void;
   login: (authData: AuthData) => Promise<ApiResponse>;
-  getContacts: () => Promise<void>;
-  getContactProfile: () => Promise<void>;
+  getUsers: () => Promise<void>;
+  getUserById: (userId: string) => Promise<void>;
   resetProfile: () => void;
   register: (newUser: NewUser) => Promise<ApiResponse>;
 };
 
 export const defaultUserState: State = {
-  user: null,
+  currentUser: null,
   userLoading: false,
-  contactProfile: null,
-  contacts: [],
+  singleUser: null,
+  users: [],
 };
 
 export type UserSlice = State & Actions;
 
-export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
-  set,
-) => ({
+export const createUserSlice: StateCreator<
+  UserSlice & ChatRoomSlice,
+  [],
+  [],
+  UserSlice
+> = (set) => ({
   ...defaultUserState,
   login: async (authData) => {
-    console.log(authData);
+    set({ userLoading: true });
 
-    const res: ApiResponse = {
-      status: true,
-      data: "",
-      message: "Login successful",
-    };
+    const res: ApiResponse = await loginUser(authData);
 
-    // TODO: Complete
+    if (res?.status) {
+      set({ currentUser: res?.data as User });
+      toast.success(res.message!);
+    } else {
+      toast.error(res.message!);
+    }
 
-    toast.success(res.message!);
+    set({ userLoading: false });
     return res;
   },
   register: async (newUser) => {
-    console.log(newUser);
+    const res: ApiResponse = await registerNewUser(newUser);
 
-    // TODO: Complete register
-    const res: ApiResponse = {
-      status: true,
-      data: "",
-      message: "OTP has been sent to your email.",
-    };
+    if (res?.status) {
+      set({ currentUser: res?.data as User });
+      toast.success(res.message!);
+    } else {
+      toast.error(res.message!);
+    }
 
-    toast.success(res.message!);
+    set({ userLoading: false });
     return res;
   },
-  getContacts: async () => {
+  getUsers: async () => {
     set({ userLoading: true });
-
-    setTimeout(() => {
-      const data = generateFakeUsers(8);
-
-      set({
-        userLoading: false,
-        contacts: data,
-      });
-    }, 1000);
+    const res = await getAllUsers();
+    set({ users: res?.data, userLoading: false });
   },
-  getContactProfile: async () => {
-    set({ userLoading: false });
-
-    setTimeout(() => {
-      const data = fakeUser();
-
-      set({
-        userLoading: false,
-        contactProfile: data,
-      });
-    }, 1000);
+  getUserById: async (userId) => {
+    set({ userLoading: true });
+    const res = await getUsersById(userId);
+    set({ singleUser: res?.data, userLoading: false });
   },
   resetProfile: () => {
-    set({ contactProfile: null });
+    set({ singleUser: null });
   },
   resetUser: () => {
     set({ ...defaultUserState });
