@@ -1,0 +1,28 @@
+Leisure Coding Open Source License (LCOSL)
+
+Copyright (c) 2024 Oghenemaro Okolosio
+
+1. **Permission to Use, Copy, Modify, and Distribute**
+   - You are granted permission to use, copy, modify, and distribute the software for personal, non-commercial purposes only.
+   - You may not use this software for commercial purposes, including but not limited to selling, licensing, or generating revenue from the software or its derived works.
+   
+2. **Modification**
+   - You may modify the software to suit your needs, provided that any modifications are clearly documented.
+   - Any modified code should be distributed under the same Leisure Coding Open Source License.
+   
+3. **Attribution**
+   - You must provide appropriate credit to the original author(s) in any copies of the software or its modifications.
+   - The credit should be included in any documentation or readme files that accompany the software or its derivative works.
+   
+4. **No Warranty**
+   - The software is provided "as-is" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
+   - The author(s) are not liable for any claims, damages, or other liabilities arising from the use or inability to use the software.
+
+5. **Non-Commercial Use**
+   - The software may not be used for any commercial activities, including for-profit services, products, or applications.
+   
+6. **Redistribution**
+   - You may redistribute the software and its source code, provided that the above conditions are met and you include this license with any redistributed code.
+   
+7. **Termination**
+   - If you violate any of the terms of this license, your permission to use, modify, or distribute the software will be terminated automatically.
